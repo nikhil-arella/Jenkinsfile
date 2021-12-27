@@ -7,10 +7,8 @@ pipeline {
            sh "cat Jenkinsfile"
            sh "chmod 700 ./script.sh"
            sh "./script.sh"
-          
         }
-       
-     }
+     } 
       stages('Jenkinsfile') {
          steps{
             sh "ls -la"
