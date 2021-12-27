@@ -1,21 +1,25 @@
 pipeline {
   agent any
-  stages {
-     stages('Jenkinsfile') {
-        steps{
-           sh "ts -la"
-           sh "cat Jenkinsfile"
-           sh "chmod 700 ./script.sh"
-           sh "./script.sh"
+
+    stages {
+        stage('SCM Checkout') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://gitlab.com/gitlab-examples/maven/simple-maven-app.git']]])
+            }
         }
-     } 
-      stages('Jenkinsfile') {
-         steps{
-            sh "ls -la"
-            sh "cat Jenkinsfile"
-            sh "pwd"
-         }
-      }
-   }
-}           
+        stage('Build') {
+            steps {
+                withMaven(maven : 'Maven') {
+                    sh "mvn clean install package"
+                }
+            } 
+        }
+        stage('Status'){
+            steps{
+                echo " Build is success"
+            }
+        }
+    }   
+}
+ 
          
