@@ -31,11 +31,7 @@ pipeline {
         deleteDir()
         checkout scm
         sh "echo 'Run Static Code Analysis'"
-      }
-    }
-    stage('Status'){
-            steps{
-                echo " Build is success"
+  
             }
         }
     }   
